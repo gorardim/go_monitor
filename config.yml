@@ -1,0 +1,51 @@
+tgBot:
+    token: "7859097629:AAHy54nW98SU5TX-HHFpbQKFEKVvxuu0iYA"
+    chatID: "-4547305703"
+
+serverListApi:
+    url: "https://service.fy-stock.com/index/api/serverlist"
+
+serviceApi:
+    urls:
+        [
+            "https://api.huitianfujijin.com/apicom/System/domain",
+            "https://api.hyht88.com/apicom/System/domain",
+            "https://admin.xc530.com/apicom/System/domain",
+            "https://api.927562.com/apicom/System/domain",
+            "https://api.glht888.com/apicom/System/domain",
+            "https://api.hyzq89889.com/apicom/System/domain",
+            "https://api.glhtfutumvp.com/apicom/System/domain",
+            "https://api.hsjr2689.com/apicom/System/domain",
+            "https://api.js85885.com/apicom/System/domain",
+            "https://api.zfadminzf.com/apicom/System/domain",
+            "https://admin.htzq6688.com/apicom/System/domain",
+        ]
+
+h5:
+    urls:
+        [
+            "https://h5.huitianfu.app",
+            "https://h5.hy8077.com/",
+            "https://h5.xc599.com ",
+            "https://h5.273525.com",
+            "https://cllmii.com",
+            "https://whska824.com",
+            "https://www.vipfutugp.com",
+            "https://hsjr8153.com",
+            "https://h5.js858887.cc",
+            "https://h5.f023.com",
+            "https://Htbxj32g.com",
+        ]
+
+navigation:
+    list:
+        [
+            {
+                url: "https://api.js85881.com/apicom",
+                mobile: "13207863154",
+                password: "123456",
+                from_to: "https://hduegs-4hdshja.com",
+                form_to: "https://api.js85881.com/",
+                token: "",
+            },
+        ]
