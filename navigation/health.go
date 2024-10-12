@@ -9,8 +9,7 @@ import (
 )
 
 const (
-	loginUrl      string = "/user/login"
-	navigationUrl string = "/system/config_navigation?token="
+	loginUrl string = "/user/login"
 )
 
 type AuthReq struct {
@@ -33,14 +32,13 @@ type AuthRes struct {
 	} `json:"data"`
 }
 
+type PostReq struct {
+	Token string `json:"token"`
+}
+
 type NavigationRes struct {
 	Status  string `json:"status"`
 	Message string `json:"message"`
-	Data    struct {
-		Home     []interface{} `json:"home"`
-		User     []interface{} `json:"user"`
-		UserList []interface{} `json:"user_list"`
-	} `json:"data"`
 }
 
 func GetAuthToken(url string, authReq AuthReq) (string, error) {
@@ -76,21 +74,80 @@ func GetNavigationHealth() error {
 		if err != nil {
 			continue
 		}
-		resp, err := http.Get(navigation.Url + navigationUrl + token)
-		if err != nil {
-			tg.SendAlert("Failed to get navigation: " + navigation.Url)
-		}
-		defer resp.Body.Close()
-		var navigationRes NavigationRes
-		err = json.NewDecoder(resp.Body).Decode(&navigationRes)
-		if err != nil {
-			tg.SendAlert("Error response from navigation: " + navigation.Url + "\n" + err.Error())
-		}
-		if navigationRes.Status != "1" {
-			tg.SendAlert("Navigation is down: " + navigation.Url + "\n" + "Message: " + navigationRes.Message)
+		// Call All GetUrls
+		for _, getUrl := range Config.Navigation.GetUrls {
+			url := navigation.Url + getUrl + token
+			resp, err := http.Get(url)
+			if err != nil {
+				tg.SendAlert("Failed to get navigation: " + url)
+			}
+			defer resp.Body.Close()
+			var navigationRes NavigationRes
+			err = json.NewDecoder(resp.Body).Decode(&navigationRes)
+			if err != nil {
+				tg.SendAlert("Error response from navigation: " + url + "\n" + err.Error())
+			}
+			if navigationRes.Status != "1" {
+				tg.SendAlert("Navigation is down: " + url + "\n" + "Message: " + navigationRes.Message)
+			}
+			tg.SendAlert("Navigation is up: " + url + "\n" + "Message: " + navigationRes.Message)
 		}
 
-		tg.SendAlert("Navigation is up: " + navigation.Url + "\n" + "Message: " + navigationRes.Message)
+		// Call All PostUrls
+		for _, postUrl := range Config.Navigation.PostUrls {
+			url := navigation.Url + postUrl
+			v := PostReq{
+				Token: token,
+			}
+			body, err := json.Marshal(v)
+			if err != nil {
+				tg.SendAlert("Failed to post navigation: " + url)
+			}
+			resp, err := http.Post(url, "application/json", bytes.NewReader(body))
+			if err != nil {
+				tg.SendAlert("Failed to post navigation: " + url)
+			}
+			defer resp.Body.Close()
+			var navigationRes NavigationRes
+			err = json.NewDecoder(resp.Body).Decode(&navigationRes)
+			if err != nil {
+				tg.SendAlert("Error response from navigation: " + url + "\n" + err.Error())
+			}
+			if navigationRes.Status != "1" {
+				tg.SendAlert("Navigation is down: " + url + "\n" + "Message: " + navigationRes.Message)
+			}
+			tg.SendAlert("Navigation is up: " + url + "\n" + "Message: " + navigationRes.Message)
+		}
+
+		// Call All PutUrls
+		for _, putUrl := range Config.Navigation.PutUrls {
+			url := navigation.Url + putUrl
+			v := PostReq{
+				Token: token,
+			}
+			body, err := json.Marshal(v)
+			if err != nil {
+				tg.SendAlert("Failed to put navigation: " + url)
+			}
+			req, err := http.NewRequest("PUT", url, bytes.NewReader(body))
+			if err != nil {
+				tg.SendAlert("Failed to put navigation: " + url)
+			}
+			resp, err := http.DefaultClient.Do(req)
+			if err != nil {
+				tg.SendAlert("Failed to put navigation: " + url)
+			}
+			defer resp.Body.Close()
+			var navigationRes NavigationRes
+			err = json.NewDecoder(resp.Body).Decode(&navigationRes)
+			if err != nil {
+				tg.SendAlert("Error response from navigation: " + url + "\n" + err.Error())
+			}
+			if navigationRes.Status != "1" {
+				tg.SendAlert("Navigation is down: " + url + "\n" + "Message: " + navigationRes.Message)
+			}
+			tg.SendAlert("Navigation is up: " + url + "\n" + "Message: " + navigationRes.Message)
+		}
 	}
 	return nil
 }

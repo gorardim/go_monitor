@@ -3,13 +3,13 @@ package main
 import (
 	h5 "monitor/h5_health"
 	"monitor/navigation"
-	healthCheck "monitor/server_health"
-	serviceCheck "monitor/service_health"
+	// healthCheck "monitor/server_health"
+	// serviceCheck "monitor/service_health"
 )
 
 func main() {
-	healthCheck.CheckServerHealth()
-	serviceCheck.GetServiceHealth()
+	// healthCheck.CheckServerHealth()
+	// serviceCheck.GetServiceHealth()
 	h5.GetH5Health()
 	navigation.GetNavigationHealth()
 	// var wg sync.WaitGroup

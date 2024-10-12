@@ -49,3 +49,18 @@ navigation:
                 token: "",
             },
         ]
+    get_urls:
+        [
+            "/system/config_navigation?token=",
+            "/system/index?token=",
+            "/System/domain?token=",
+        ]
+    post_urls:
+        [
+            "/system/config_property",
+            "/member",
+            "/System/domain",
+            "/System/WrongDomain",
+            "/system/config_property",
+        ]
+    put_urls: [""]

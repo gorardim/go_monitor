@@ -47,6 +47,9 @@ type Conf struct {
 			FormTo   string `yaml:"form_to"`
 			Token    string `yaml:"token"`
 		} `yaml:"list"`
+		GetUrls  []string `yaml:"get_urls"`
+		PostUrls []string `yaml:"post_urls"`
+		PutUrls  []string `yaml:"put_urls"`
 	} `yaml:"navigation"`
 }
 
