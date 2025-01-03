@@ -1,6 +1,6 @@
 tgBot:
-    token: "7859097629:AAHy54nW98SU5TX-HHFpbQKFEKVvxuu0iYA"
-    chatID: "-4547305703"
+    token: "xxxx:xxxxxxx"
+    chatID: "-xxx"
 
 serverListApi:
     url: "https://service.fy-stock.com/index/api/serverlist"
@@ -42,8 +42,8 @@ navigation:
         [
             {
                 url: "https://api.js85881.com/apicom",
-                mobile: "13207863154",
-                password: "123456",
+                mobile: "xxxx",
+                password: "xxxx",
                 from_to: "https://hduegs-4hdshja.com",
                 form_to: "https://api.js85881.com/",
                 token: "",
